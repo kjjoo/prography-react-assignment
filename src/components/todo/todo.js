@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { todos } from "./todo-data";
 import TodoItem from "./todo-item";
 import styled from "styled-components";
@@ -27,12 +27,27 @@ const TodoTemplate = styled.div`
   flex-direction: column;
 `;
 
+
 export default function Todo() {
+  const [todo, setTodo] = useState(todos)
+
+  const enter = e => {
+    if (e.key === "Enter") {
+      const enterValue = e.target.value
+      const newTodo = {id: todo.length + 1, job: enterValue, status: "ing"}
+      // 전개구문 (spread operator)
+      setTodo([...todo, newTodo])
+      e.target.value = ""
+
+    }
+  }
+
+
   return (
     <>
       <TodoTemplate>
-        <Input placeholder="오늘은 무엇을 해야 하나요?" />
-        {todos.map((todo, index) => (
+        <Input placeholder="오늘은 무엇을 해야 하나요?" onKeyPress={enter}/>
+        {todo.map((todo, index) => (
           <TodoItem
             key={index}
             job={todo.job}
