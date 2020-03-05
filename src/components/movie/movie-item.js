@@ -1,11 +1,16 @@
 import React from "react";
 
-import "./movie-item.css";
+import styled from "styled-components";
 
+const Item = styled.p`
+  font-size: 15px;
+  text-align: center;
+`
+// 영화 제목 하나 컴포넌트
 export default function MovieItem({ title }) {
   return (
     <>
-      <p>{title}</p>
+      <Item>{title}</Item>
     </>
   );
 }

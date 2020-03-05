@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { todos } from "./todo-data";
+import React, { useContext } from "react";
 import TodoItem from "./todo-item";
 import styled from "styled-components";
+import { TodoContext } from "../../context/todo-context";
 
 const Input = styled.input`
   flex: 1;
@@ -13,7 +13,9 @@ const Input = styled.input`
     color: rgb(150, 150, 150);
   }
 `;
+// Todo 리스트 출력 템플릿
 const TodoTemplate = styled.div`
+  text-align: center;
   width: 512px;
 
   background: white;
@@ -27,21 +29,19 @@ const TodoTemplate = styled.div`
   flex-direction: column;
 `;
 
-
+// Todo 리스트 컴포넌트
 export default function Todo() {
-  const [todo, setTodo] = useState(todos)
+// context 사용
+  const { todo, addTodo } = useContext(TodoContext)
 
-  const enter = e => {
-    if (e.key === "Enter") {
-      const enterValue = e.target.value
-      const newTodo = {id: todo.length + 1, job: enterValue, status: "ing"}
-      // 전개구문 (spread operator)
-      setTodo([...todo, newTodo])
-      e.target.value = ""
-
+  // input 창에서 엔터키가 입력되었을 때 이벤트
+  const enter = (e) => {
+    if (e.key === 'Enter') {
+      const enterValue = e.target.value // 입력값
+      addTodo(enterValue)
+      e.target.value = '' //입력값은 초기화
     }
   }
-
 
   return (
     <>
